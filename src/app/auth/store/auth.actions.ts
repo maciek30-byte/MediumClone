@@ -1,6 +1,12 @@
-import { createAction, props } from '@ngrx/store';
-import { RegisterRequest } from '../types/types';
+import { createActionGroup, props } from '@ngrx/store'
+import { RegisterRequest } from '../types/types'
+import { CurrentUser } from '../../../shared/models/User'
 
-export const register = createAction(
-  '[Auth] register', props<{request: RegisterRequest}>()
-)
+export const authActions = createActionGroup({
+  source: 'auth',
+  events: {
+    Register: props<{ request: RegisterRequest }>(),
+    'Register Success': props<{ currentUser: CurrentUser }>(),
+    'Register Failure': props<{ errorMessage: Error }>(),
+  },
+})

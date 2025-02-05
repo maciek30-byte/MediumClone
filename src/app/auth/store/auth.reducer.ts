@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { AuthState } from '../types/types';
-import { register } from './auth.actions';
+import { authActions} from './auth.actions';
 
 const INITIAL_AUTH_STATE: AuthState = {
   isSubmitted: false,
@@ -10,7 +10,7 @@ const authFeature = createFeature({
   name: 'auth',
   reducer: createReducer(
     INITIAL_AUTH_STATE,
-    on(register, (state) => ({
+    on(authActions.register, (state) => ({
       ...state,
       isSubmitted: true,
     }))
