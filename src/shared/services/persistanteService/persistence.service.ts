@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core'
 })
 export class PersistenceService {
   set<TData>(key: string, data: TData): void {
+    console.log("123 FIRE AND SET LOCAL STORAGE",)
     try {
       localStorage.setItem(key, JSON.stringify(data))
     } catch (error) {

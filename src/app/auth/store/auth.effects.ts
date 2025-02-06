@@ -46,7 +46,7 @@ export const redirectRegisterEffect$ = createEffect(
   { functional: true, dispatch: false }
 )
 
-export const loginEffects = createEffect(
+export const loginEffects$ = createEffect(
   (
     actions$ = inject(Actions),
     authService = inject(AuthService),
@@ -58,7 +58,7 @@ export const loginEffects = createEffect(
         return authService.login(request).pipe(
           map((currentUser: CurrentUser) => {
             persistenceService.set('token', currentUser.token)
-            return authActions.registerSuccess({ currentUser })
+            return authActions.loginSuccess({ currentUser })
           }),
           catchError((errorResponse: HttpErrorResponse) =>
             of(

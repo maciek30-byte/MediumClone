@@ -6,7 +6,7 @@ import { CurrentUser } from '../../shared/models/User'
 import { environment } from '../../environments/environment'
 
 const REGISTER_POST_URL = environment.apiUrl + '/users'
-const LOGIN_POST_URL = environment.apiUrl + '/login'
+const LOGIN_POST_URL = environment.apiUrl + '/users/login'
 
 @Injectable({
   providedIn: 'root',
@@ -17,17 +17,13 @@ export class AuthService {
   register(registerData: RegisterRequest): Observable<CurrentUser> {
     return this.httpClient
       .post<AuthResponse>(REGISTER_POST_URL, registerData)
-      .pipe(map(AuthService.getUser))
+      .pipe(map((response) => response.user))
   }
 
   login(loginData: LoginRequest): Observable<CurrentUser> {
     return this.httpClient
       .post<AuthResponse>(LOGIN_POST_URL, loginData)
-      .pipe(map(AuthService.getUser))
-  }
-
-  private static getUser(response: AuthResponse): CurrentUser {
-    return response.user
+      .pipe(map((response) => response.user))
   }
 }
 

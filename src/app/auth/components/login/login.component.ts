@@ -4,36 +4,36 @@ import { RouterLink } from '@angular/router'
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
 import { Store } from '@ngrx/store'
 import { authActions } from '../../store/auth.actions'
-import { RegisterRequest } from '../../types/types'
-import { selectIsSubmitted, selectValidationErrors } from '../../store/auth.reducer';
+import { LoginRequest } from '../../types/types'
+import { selectIsSubmitted, selectValidationErrors } from '../../store/auth.reducer'
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-login',
   imports: [CommonModule, RouterLink, ReactiveFormsModule],
-  templateUrl: './register.component.html',
+  templateUrl: './login.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegisterComponent {
+export class LoginComponent {
   private formBuilder = inject(FormBuilder)
   private store = inject(Store)
 
   isSubmitted$ = this.store.select(selectIsSubmitted)
   errorMessage$ = this.store.select(selectValidationErrors)
 
-  registerForm = this.formBuilder.group({
-    username: this.formBuilder.nonNullable.control('', Validators.required),
+  loginForm = this.formBuilder.group({
     email: this.formBuilder.nonNullable.control('', Validators.required),
     password: this.formBuilder.nonNullable.control('', Validators.required),
   })
 
   onSubmit() {
-    const request: RegisterRequest = {
-      user: this.registerForm.getRawValue(),
+    const request: LoginRequest = {
+      user: this.loginForm.getRawValue(),
     }
 
-    this.store.dispatch(authActions.register({ request: request }))
+    this.store.dispatch(authActions.login({ request: request }))
   }
 }
 
 //@TODO Different place form form declaration, on the component should be only instatniate, or call//
 //@TODO Add form validation//
+//@TODO for now it is a candidate to do it one shared component with registration components, wait for it for now because there are two separate business events//
