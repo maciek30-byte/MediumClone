@@ -2,7 +2,6 @@ import { createFeature, createReducer, on } from '@ngrx/store'
 import { AuthState } from '../types/types'
 import { authActions } from './auth.actions'
 import { routerNavigatedAction } from '@ngrx/router-store'
-import { state } from '@angular/animations'
 
 const INITIAL_AUTH_STATE: AuthState = {
   isSubmitted: false,
