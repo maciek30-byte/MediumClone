@@ -1,22 +1,33 @@
-import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { AuthResponse, RegisterRequest } from './types/types';
-import { map, Observable } from 'rxjs';
-import { CurrentUser } from '../../shared/models/User';
-import { environment } from '../../environments/environment';
+import { inject, Injectable } from '@angular/core'
+import { HttpClient } from '@angular/common/http'
+import { AuthResponse, LoginRequest, RegisterRequest } from './types/types'
+import { map, Observable } from 'rxjs'
+import { CurrentUser } from '../../shared/models/User'
+import { environment } from '../../environments/environment'
 
-const REGISTER_POST_URL = environment.apiUrl+'/users';
+const REGISTER_POST_URL = environment.apiUrl + '/users'
+const LOGIN_POST_URL = environment.apiUrl + '/login'
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private httpClient = inject(HttpClient);
+  private httpClient = inject(HttpClient)
 
   register(registerData: RegisterRequest): Observable<CurrentUser> {
     return this.httpClient
       .post<AuthResponse>(REGISTER_POST_URL, registerData)
-      .pipe(map((response) => response.user));
+      .pipe(map(AuthService.getUser))
+  }
+
+  login(loginData: LoginRequest): Observable<CurrentUser> {
+    return this.httpClient
+      .post<AuthResponse>(LOGIN_POST_URL, loginData)
+      .pipe(map(AuthService.getUser))
+  }
+
+  private static getUser(response: AuthResponse): CurrentUser {
+    return response.user
   }
 }
 
