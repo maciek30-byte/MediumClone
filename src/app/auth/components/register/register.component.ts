@@ -5,8 +5,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
 import { Store } from '@ngrx/store'
 import { authActions } from '../../store/auth.actions'
 import { RegisterRequest } from '../../types/types'
-import { selectIsSubmitted } from '../../store/auth.reducer'
-import { AuthService } from '../../auth.service'
+import { selectIsSubmitted, selectValidationErrors } from '../../store/auth.reducer';
 
 @Component({
   selector: 'app-register',
@@ -20,6 +19,7 @@ export class RegisterComponent {
   private store = inject(Store)
 
   isSubmitted$ = this.store.select(selectIsSubmitted)
+  errorMessage$ = this.store.select(selectValidationErrors)
 
   registerForm = this.formBuilder.group({
     username: this.formBuilder.nonNullable.control('', Validators.required),

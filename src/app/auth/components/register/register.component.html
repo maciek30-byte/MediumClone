@@ -6,7 +6,8 @@
         <p class="text-xs-center">
           <a routerLink="/login">Have an account?</a>
         </p>
-        BACKEND ERRORS HERE
+        <p></p>
+
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
           <fieldset class="form-group">
             <input
@@ -32,7 +33,11 @@
               formControlName="password"
             />
           </fieldset>
-          <button type="submit" class="btn btn-lg btn-primary pull-xs-right" [disabled]="isSubmitted$ | async">
+          <button
+            type="submit"
+            class="btn btn-lg btn-primary pull-xs-right"
+            [disabled]="isSubmitted$ | async"
+          >
             Sign Up
           </button>
         </form>
