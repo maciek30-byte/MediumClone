@@ -84,4 +84,30 @@ export const redirectLoginEffect$ = createEffect(
   { functional: true, dispatch: false }
 )
 
+export const getCurrentUserEffect$ = createEffect(
+  (
+    actions$ = inject(Actions),
+    authService = inject(AuthService),
+    persistenceService = inject(PersistenceService)
+  ) => {
+    return actions$.pipe(
+      ofType(authActions.getCurrentUser),
+      switchMap(() => {
+        return authService.getCurrentUser().pipe(
+          map((currentUser) => {
+            const token = persistenceService.get('token')
+            if (!token) {
+              return authActions.getCurrentUserFailed()
+            }
+
+            return authActions.getCurrentUserSuccess(currentUser)
+          }),
+          catchError(() => of(authActions.getCurrentUserFailed()))
+        )
+      })
+    )
+  },
+  { functional: true }
+)
+
 //@TODO is it possible to get ride of this whole repeatable boilerplate? if it is not divide it to separate files//

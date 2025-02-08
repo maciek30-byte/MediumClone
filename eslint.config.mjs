@@ -16,7 +16,9 @@ export default [
       '**/*.mjs',
     ],
     // Override or add rules here
-    rules: {},
+    rules: {
+      "@typescript-eslint/explicit-function-return-type": ["error"]
+    },
   },
   ...nx.configs['flat/angular'],
   ...nx.configs['flat/angular-template'],

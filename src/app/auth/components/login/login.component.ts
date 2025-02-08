@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store'
 import { authActions } from '../../store/auth.actions'
 import { LoginRequest } from '../../types/types'
 import { selectIsSubmitted, selectValidationErrors } from '../../store/auth.reducer'
+import { AppState } from '../../../types';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ import { selectIsSubmitted, selectValidationErrors } from '../../store/auth.redu
 })
 export class LoginComponent {
   private formBuilder = inject(FormBuilder)
-  private store = inject(Store)
+  private store = inject<Store<AppState>>(Store)
 
   isSubmitted$ = this.store.select(selectIsSubmitted)
   errorMessage$ = this.store.select(selectValidationErrors)
